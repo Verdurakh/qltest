@@ -320,6 +320,8 @@
             cursor: pointer;
             text-align: center;
             flex: 1;
+            position: relative;
+            transition: background .2s, color .2s, border-color .2s;
         }
         .btn-primary {
             background: var(--ql-accent);
@@ -333,6 +335,34 @@
         .btn[disabled] {
             opacity: .5;
             cursor: not-allowed;
+        }
+
+        /* loader spinner */
+        .loader {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff;
+            animation: spin .6s linear infinite;
+            margin-right: .5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* success style after async action */
+        .btn-success {
+            background: #1e3a1e;
+            border: 1px solid #2f6b2f;
+            color: #8aff8a;
+        }
+        .btn-success .checkmark {
+            margin-right: .5rem;
+        }
+        .status-done {
+            color: var(--ql-accent);
+            font-weight: 600;
         }
 
         .centered-block {
@@ -506,8 +536,8 @@
                 This is a demo – no real data is sent.
             </p>
 
-            <button class="upload-mock" type="button" onclick="mockUpload()">
-                📷 Upload / take photo of ID
+            <button class="upload-mock btn-action" type="button" id="btnUpload" onclick="mockAsyncAction('upload')">
+                <span class="btn-label">📷 Upload / take photo of ID</span>
             </button>
 
             <div id="uploadStatus" class="small-hint" style="margin-top:.75rem;">
@@ -523,8 +553,8 @@
                 We'll confirm you're eligible for this plan.
             </p>
 
-            <button class="upload-mock" type="button" onclick="mockCheck()">
-                ✅ Verify identity &amp; credit
+            <button class="upload-mock btn-action" type="button" id="btnVerify" onclick="mockAsyncAction('check')">
+                <span class="btn-label">✅ Verify identity &amp; credit</span>
             </button>
 
             <div id="checkStatus" class="small-hint" style="margin-top:.75rem;">
@@ -555,7 +585,7 @@
             <form>
                 <div>
                     <label for="currentNumber">Your current mobile number</label>
-                    <input id="currentNumber" placeholder="+41 79 123 45 67" />
+                    <input id="currentNumber" placeholder="+41 79 123 45 67" oninput="handlePortNumberInput()" value="+41 79 123 45 67" />
                 </div>
 
                 <div>
@@ -578,8 +608,8 @@
                     <div class="small-hint" style="margin-bottom:.75rem;">
                         Digital signature required for legal number porting.
                     </div>
-                    <button class="btn btn-primary" type="button" onclick="openSigningService()" style="width:100%;">
-                        ✍️ Sign Authorization
+                    <button class="btn btn-primary btn-action" type="button" id="btnSign" onclick="mockAsyncAction('sign')" style="width:100%;">
+                        <span class="btn-label">✍️ Sign Authorization</span>
                     </button>
                     <div id="signStatus" class="small-hint" style="margin-top:.5rem;color:var(--ql-text-dim);">
                         Not signed yet
@@ -610,8 +640,12 @@
                 <strong>Paid in-store ✅</strong>
             </div>
             <div class="summary-row">
-                <div>Number</div>
+                <div>Number choice</div>
                 <strong id="summaryNumberChoice">New number assigned</strong>
+            </div>
+            <div class="summary-row">
+                <div>Your number</div>
+                <strong id="summaryActualNumber">+41 79 000 00 00</strong>
             </div>
             <div class="summary-total">
                 By continuing you agree to start your Pepper Mobile service
@@ -671,6 +705,12 @@
     let currentScreen = 1;
     const totalScreens = 6;
 
+    // number state
+    let chosenNumberOption = "new"; // "new" | "port"
+    let generatedNewNumber = generateSwissNumber(); // default assign on load
+    let portedNumber = "+41 79 123 45 67";
+    let isSigned = false;
+
     function updateUI() {
         // screens
         for (let i = 1; i <= totalScreens; i++) {
@@ -713,12 +753,16 @@
             }
         });
 
-        // number choice summary
-        const sumEl = document.getElementById("summaryNumberChoice");
-        if (sumEl) {
-            sumEl.textContent = chosenNumberOption === "port"
-                ? "Keep my current number"
-                : "New number assigned";
+        // summary texts for number choice + actual number
+        const sumChoiceEl = document.getElementById("summaryNumberChoice");
+        const sumActualEl = document.getElementById("summaryActualNumber");
+
+        if (chosenNumberOption === "port") {
+            if (sumChoiceEl) sumChoiceEl.textContent = "Keep my current number";
+            if (sumActualEl) sumActualEl.textContent = portedNumber || "(not entered)";
+        } else {
+            if (sumChoiceEl) sumChoiceEl.textContent = "New number assigned";
+            if (sumActualEl) sumActualEl.textContent = generatedNewNumber;
         }
     }
 
@@ -736,24 +780,77 @@
         }
     }
 
-    // mock upload + credit check
-    function mockUpload() {
-        const status = document.getElementById("uploadStatus");
-        if (status) {
-            status.textContent = "ID uploaded ✓ (demo)";
+    /* ---------------------------
+       Async button animation logic
+       --------------------------- */
+    function mockAsyncAction(kind) {
+        // kind: 'upload' | 'check' | 'sign'
+        let btnEl, statusEl, workingLabel, successLabel;
+
+        if (kind === "upload") {
+            btnEl = document.getElementById("btnUpload");
+            statusEl = document.getElementById("uploadStatus");
+            workingLabel = "Uploading ID…";
+            successLabel = "ID uploaded";
+        } else if (kind === "check") {
+            btnEl = document.getElementById("btnVerify");
+            statusEl = document.getElementById("checkStatus");
+            workingLabel = "Verifying…";
+            successLabel = "Verified";
+        } else if (kind === "sign") {
+            btnEl = document.getElementById("btnSign");
+            statusEl = document.getElementById("signStatus");
+            workingLabel = "Opening signature…";
+            successLabel = "Signed successfully";
+            isSigned = true;
         }
-    }
-    function mockCheck() {
-        const status = document.getElementById("checkStatus");
-        if (status) {
-            status.textContent = "Verified ✓ (demo)";
-        }
+
+        // already completed? do nothing
+        if (!btnEl || btnEl.disabled) return;
+
+        // show spinner state
+        startLoadingState(btnEl, workingLabel);
+
+        // fake async (~1.5-2s)
+        const delayMs = 1600 + Math.floor(Math.random() * 400); // 1600-1999ms
+        setTimeout(() => {
+            // success style
+            finishSuccessState(btnEl, successLabel);
+
+            // update status text with accent color
+            if (statusEl) {
+                statusEl.innerHTML = `✅ ${successLabel} (demo)`;
+                statusEl.classList.add("status-done");
+            }
+        }, delayMs);
     }
 
-    // number choice handling
-    let chosenNumberOption = "new";
-    let isSigned = false;
+    function startLoadingState(btnEl, label) {
+        btnEl.disabled = true;
 
+        // turn into primary-looking button if it's not already
+        if (!btnEl.classList.contains("btn")) {
+            btnEl.classList.add("btn","btn-primary");
+        }
+
+        btnEl.classList.remove("btn-success");
+        btnEl.innerHTML = `
+			<div class="loader"></div>
+			<span>${label}</span>
+		`;
+    }
+
+    function finishSuccessState(btnEl, label) {
+        btnEl.classList.add("btn-success");
+        btnEl.innerHTML = `
+			<span class="checkmark">✔</span>
+			<span>${label}</span>
+		`;
+    }
+
+    /* ---------------------------
+       Number selection + generation
+       --------------------------- */
     function chooseNumberOpt(which) {
         chosenNumberOption = which;
         const btnNew = document.getElementById("opt-new");
@@ -764,6 +861,9 @@
             btnNew.classList.add("active");
             btnPort.classList.remove("active");
             portDetails.style.display = "none";
+
+            // when switching to new, (re)generate a random Swiss number
+            generatedNewNumber = generateSwissNumber();
         } else {
             btnPort.classList.add("active");
             btnNew.classList.remove("active");
@@ -773,15 +873,28 @@
         updateUI();
     }
 
-    function openSigningService() {
-        // Mock signing service - in production this would open a real e-signature service
-        const signStatus = document.getElementById("signStatus");
-        if (signStatus) {
-            signStatus.textContent = "✅ Signed successfully (demo)";
-            signStatus.style.color = "var(--ql-accent)";
-            isSigned = true;
+    function handlePortNumberInput() {
+        const input = document.getElementById("currentNumber");
+        portedNumber = input ? input.value.trim() : "";
+        updateUI();
+    }
+
+    // Swiss number generator: +41 79 XXX XX XX
+    function generateSwissNumber() {
+        function randDigit() {
+            return Math.floor(Math.random() * 10);
         }
-        // In production: window.open('https://signing-service.example.com/...')
+        let d1 = randDigit();
+        let d2 = randDigit();
+        let d3 = randDigit();
+        let d4 = randDigit();
+        let d5 = randDigit();
+        let d6 = randDigit();
+        let d7 = randDigit();
+
+        // Format:
+        // +41 79 d1d2d3 d4d5 d6d7
+        return `+41 79 ${d1}${d2}${d3} ${d4}${d5} ${d6}${d7}`;
     }
 
     updateUI();
