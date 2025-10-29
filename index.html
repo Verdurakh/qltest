@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pepper Mobile Onboarding</title>
+    <title id="pageTitle">Pepper Mobile Onboarding</title>
 
     <style>
         :root {
@@ -85,7 +85,34 @@
             font-size: .75rem;
             color: var(--ql-text-dim);
             text-align: right;
+            line-height: 1.3;
         }
+
+        /* Language Selector Styling */
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: .75rem; /* Add some space below the brand line */
+            justify-content: flex-end; /* Align right */
+        }
+        .lang-selector label {
+            font-size: .75rem;
+            color: var(--ql-text-dim);
+            font-weight: 500;
+            margin: 0;
+        }
+        .lang-selector select {
+            font-size: .75rem;
+            padding: .2rem .4rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--ql-border);
+            background: var(--ql-card);
+            color: var(--ql-text-main);
+            appearance: none; /* Remove default styling on some browsers */
+            cursor: pointer;
+        }
+
 
         .stepper {
             display: flex;
@@ -396,78 +423,85 @@
     <header>
         <div class="brand-line">
             <div class="logo">
-                <img src="./seasoning_1406653.png" alt="Pepper" class="logo-icon">
-                <span>Pepper</span><span class="logo-accent">mobile</span>
+                <span data-localize="brand-name">Pepper</span><span class="logo-accent">mobile</span>
             </div>
             <div class="retailer-ref">
-                Purchased at: <strong>Super Secret partner</strong><br/>
-                Ref: <span style="font-family:monospace;">X4F7Q9</span>
+                <span data-localize="ref-purchased-at">Purchased at:</span> <strong>Super Secret partner</strong><br/>
+                <span data-localize="ref-ref">Ref:</span> <span style="font-family:monospace;">X4F7Q9</span>
             </div>
+        </div>
+
+        <div class="lang-selector">
+            <label for="lang-select" data-localize="lang-label">Language</label>
+            <select id="lang-select" onchange="setLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
+            </select>
         </div>
 
         <div class="stepper">
             <div class="step" data-step-label="welcome">
                 <div class="step-circle">1</div>
-                <div class="step-label">Welcome</div>
+                <div class="step-label" data-localize="step-welcome">Welcome</div>
             </div>
             <div class="step" data-step-label="details">
                 <div class="step-circle">2</div>
-                <div class="step-label">Your details</div>
+                <div class="step-label" data-localize="step-details">Your details</div>
             </div>
             <div class="step" data-step-label="idcheck">
                 <div class="step-circle">3</div>
-                <div class="step-label">ID &amp; credit</div>
+                <div class="step-label" data-localize="step-idcheck">ID &amp; credit</div>
             </div>
             <div class="step" data-step-label="number">
                 <div class="step-circle">4</div>
-                <div class="step-label">Number</div>
+                <div class="step-label" data-localize="step-number">Number</div>
             </div>
             <div class="step" data-step-label="summary">
                 <div class="step-circle">5</div>
-                <div class="step-label">Summary</div>
+                <div class="step-label" data-localize="step-summary">Summary</div>
             </div>
             <div class="step" data-step-label="done">
                 <div class="step-circle">6</div>
-                <div class="step-label">Done</div>
+                <div class="step-label" data-localize="step-done">Done</div>
             </div>
         </div>
     </header>
 
-    <!-- SCREEN 1: WELCOME -->
     <section class="screen active" id="screen-1">
-        <h1>You're almost connected 🎉</h1>
-        <p class="sub">
+        <h1 data-localize="scr1-title">You're almost connected 🎉</h1>
+        <p class="sub" data-localize="scr1-subtitle">
             Thanks for choosing Pepper Mobile. Let's activate your new plan.
             This only takes a few minutes.
         </p>
 
         <div class="plan-card">
             <div class="plan-title-line">
-                <div class="plan-name">Unlimited Mobile Data</div>
-                <div class="plan-price">CHF 49 / month</div>
+                <div class="plan-name" data-localize="scr1-plan-name">Unlimited Mobile Data</div>
+                <div class="plan-price" data-localize="scr1-plan-price">CHF 49 / month</div>
             </div>
-            <div class="plan-desc">
+            <div class="plan-desc" data-localize="scr1-plan-desc">
                 Unlimited data in Switzerland, calls &amp; texts included.
                 Your one-time activation fee was already paid in-store.
             </div>
 
             <div class="plan-meta">
-                <div class="badge">No stress setup</div>
-                <div class="badge">Keep your number</div>
-                <div class="badge">Swiss support</div>
+                <div class="badge" data-localize="scr1-badge1">No stress setup</div>
+                <div class="badge" data-localize="scr1-badge2">Keep your number</div>
+                <div class="badge" data-localize="scr1-badge3">Swiss support</div>
             </div>
         </div>
 
-        <div class="sub" style="margin-bottom:2rem;">
+        <div class="sub" style="margin-bottom:2rem;" data-localize="scr1-sub-text">
             We'll ask for your contact info, confirm your identity,
             and (if needed) request to move your current number.
         </div>
 
         <div class="centered-block" style="padding:1rem 0 0;">
-            <div class="big-headline" style="font-size:1rem;margin-bottom:.25rem;">
+            <div class="big-headline" style="font-size:1rem;margin-bottom:.25rem;" data-localize="scr1-list-headline">
                 What you need:
             </div>
-            <div class="big-text" style="font-size:.8rem;margin-bottom:0;">
+            <div class="big-text" style="font-size:.8rem;margin-bottom:0;" data-localize="scr1-list-items">
                 • An email you can access<br/>
                 • Your ID card or passport<br/>
                 • Your current mobile number (if you want to keep it)
@@ -475,196 +509,191 @@
         </div>
     </section>
 
-    <!-- SCREEN 2: PERSONAL DETAILS -->
     <section class="screen" id="screen-2">
-        <h1>Your details</h1>
-        <p class="sub">
+        <h1 data-localize="scr2-title">Your details</h1>
+        <p class="sub" data-localize="scr2-subtitle">
             We'll use this to set up your account and keep you updated.
         </p>
 
         <form>
             <div>
-                <label for="fullName">Full name</label>
-                <input id="fullName" placeholder="Jane Müller" />
+                <label for="fullName" data-localize="scr2-label-name">Full name</label>
+                <input id="fullName" placeholder="Jane Müller" data-localize-placeholder="scr2-ph-name" />
             </div>
 
             <div>
-                <label for="email">Email address</label>
-                <input id="email" placeholder="jane@example.com" type="email" />
-                <div class="small-hint">
+                <label for="email" data-localize="scr2-label-email">Email address</label>
+                <input id="email" placeholder="jane@example.com" type="email" data-localize-placeholder="scr2-ph-email" />
+                <div class="small-hint" data-localize="scr2-hint-email">
                     We'll send a link so you can continue later if you close this page.
                 </div>
             </div>
 
             <div>
-                <label for="street">Street &amp; house number</label>
-                <input id="street" placeholder="Bahnhofstrasse 10" />
+                <label for="street" data-localize="scr2-label-street">Street &amp; house number</label>
+                <input id="street" placeholder="Bahnhofstrasse 10" data-localize-placeholder="scr2-ph-street" />
             </div>
 
             <div style="display:flex;gap:.75rem;">
                 <div style="flex:2;">
-                    <label for="city">City</label>
-                    <input id="city" placeholder="Bern" />
+                    <label for="city" data-localize="scr2-label-city">City</label>
+                    <input id="city" placeholder="Bern" data-localize-placeholder="scr2-ph-city" />
                 </div>
                 <div style="flex:1;">
-                    <label for="zip">ZIP</label>
-                    <input id="zip" placeholder="3000" />
+                    <label for="zip" data-localize="scr2-label-zip">ZIP</label>
+                    <input id="zip" placeholder="3000" data-localize-placeholder="scr2-ph-zip" />
                 </div>
             </div>
 
             <div>
-                <label for="dob">Date of birth</label>
+                <label for="dob" data-localize="scr2-label-dob">Date of birth</label>
                 <input id="dob" type="date" />
             </div>
         </form>
     </section>
 
-    <!-- SCREEN 3: ID + CREDIT CHECK -->
     <section class="screen" id="screen-3">
-        <h1>ID verification &amp; credit check</h1>
-        <p class="sub">
+        <h1 data-localize="scr3-title">ID verification &amp; credit check</h1>
+        <p class="sub" data-localize="scr3-subtitle">
             We're required to confirm who's using the SIM and to check basic credit
             eligibility. This won't affect your credit score.
         </p>
 
         <div class="plan-card">
             <div class="plan-title-line" style="margin-bottom:.5rem;">
-                <div class="plan-name">Step 1: Upload ID</div>
+                <div class="plan-name" data-localize="scr3-step1-name">Step 1: Upload ID</div>
             </div>
-            <p class="plan-desc" style="margin-bottom:1rem;">
+            <p class="plan-desc" style="margin-bottom:1rem;" data-localize="scr3-step1-desc">
                 Please take a clear photo of the front of your ID card or passport.
                 This is a demo – no real data is sent.
             </p>
 
             <button class="upload-mock btn-action" type="button" id="btnUpload" onclick="mockAsyncAction('upload')">
-                <span class="btn-label">📷 Upload / take photo of ID</span>
+                <span class="btn-label" data-localize="scr3-btn-upload">📷 Upload / take photo of ID</span>
             </button>
 
             <div id="uploadStatus" class="small-hint" style="margin-top:.75rem;">
-                No file selected
+                <span data-localize="scr3-status-unselected">No file selected</span>
             </div>
         </div>
 
         <div class="plan-card">
             <div class="plan-title-line" style="margin-bottom:.5rem;">
-                <div class="plan-name">Step 2: Run quick check</div>
+                <div class="plan-name" data-localize="scr3-step2-name">Step 2: Run quick check</div>
             </div>
-            <p class="plan-desc" style="margin-bottom:1rem;">
+            <p class="plan-desc" style="margin-bottom:1rem;" data-localize="scr3-step2-desc">
                 We'll confirm you're eligible for this plan.
             </p>
 
             <button class="upload-mock btn-action" type="button" id="btnVerify" onclick="mockAsyncAction('check')">
-                <span class="btn-label">✅ Verify identity &amp; credit</span>
+                <span class="btn-label" data-localize="scr3-btn-verify">✅ Verify identity &amp; credit</span>
             </button>
 
             <div id="checkStatus" class="small-hint" style="margin-top:.75rem;">
-                Not verified yet
+                <span data-localize="scr3-status-unverified">Not verified yet</span>
             </div>
         </div>
     </section>
 
-    <!-- SCREEN 4: NUMBER PORTING -->
     <section class="screen" id="screen-4">
-        <h1>Your number</h1>
-        <p class="sub">
+        <h1 data-localize="scr4-title">Your number</h1>
+        <p class="sub" data-localize="scr4-subtitle">
             Do you want to keep your current mobile number, or get a brand new one?
         </p>
 
         <div class="option-row" style="margin-bottom:1rem;">
             <div class="option-btn active" id="opt-new" onclick="chooseNumberOpt('new')">
-                Get a new number
-                <div class="small-hint">Fastest</div>
+                <span data-localize="scr4-opt-new-title">Get a new number</span>
+                <div class="small-hint" data-localize="scr4-opt-new-hint">Fastest</div>
             </div>
             <div class="option-btn" id="opt-port" onclick="chooseNumberOpt('port')">
-                Keep my current number
-                <div class="small-hint">We'll move it for you</div>
+                <span data-localize="scr4-opt-port-title">Keep my current number</span>
+                <div class="small-hint" data-localize="scr4-opt-port-hint">We'll move it for you</div>
             </div>
         </div>
 
         <div id="porting-details" style="display:none;">
             <form>
                 <div>
-                    <label for="currentNumber">Your current mobile number</label>
-                    <input id="currentNumber" placeholder="+41 79 123 45 67" oninput="handlePortNumberInput()" value="+41 79 123 45 67" />
+                    <label for="currentNumber" data-localize="scr4-label-current-num">Your current mobile number</label>
+                    <input id="currentNumber" placeholder="+41 79 123 45 67" oninput="handlePortNumberInput()" value="+41 79 123 45 67" data-localize-placeholder="scr4-ph-current-num" />
                 </div>
 
                 <div>
-                    <label for="currentProvider">Current provider</label>
+                    <label for="currentProvider" data-localize="scr4-label-provider">Current provider</label>
                     <select id="currentProvider">
-                        <option value="">Select your provider</option>
+                        <option value="" data-localize="scr4-select-default">Select your provider</option>
                         <option value="swisscom">Swisscom</option>
                         <option value="sunrise">Sunrise</option>
                         <option value="salt">Salt</option>
                         <option value="yallo">Yallo</option>
                         <option value="wingo">Wingo</option>
                         <option value="digital-republic">Digital Republic</option>
-                        <option value="other">Other</option>
+                        <option value="other" data-localize="scr4-select-other">Other</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="authConfirm">Authorization</label>
-                    <textarea id="authConfirm" rows="3" readonly>I authorize Pepper Mobile to request number transfer from my current provider.</textarea>
-                    <div class="small-hint" style="margin-bottom:.75rem;">
+                    <label for="authConfirm" data-localize="scr4-label-auth">Authorization</label>
+                    <textarea id="authConfirm" rows="3" readonly data-localize="scr4-auth-text">I authorize Pepper Mobile to request number transfer from my current provider.</textarea>
+                    <div class="small-hint" style="margin-bottom:.75rem;" data-localize="scr4-hint-auth">
                         Digital signature required for legal number porting.
                     </div>
                     <button class="btn btn-primary btn-action" type="button" id="btnSign" onclick="mockAsyncAction('sign')" style="width:100%;">
-                        <span class="btn-label">✍️ Sign Authorization</span>
+                        <span class="btn-label" data-localize="scr4-btn-sign">✍️ Sign Authorization</span>
                     </button>
                     <div id="signStatus" class="small-hint" style="margin-top:.5rem;color:var(--ql-text-dim);">
-                        Not signed yet
+                        <span data-localize="scr4-status-unsigned">Not signed yet</span>
                     </div>
                 </div>
             </form>
         </div>
     </section>
 
-    <!-- SCREEN 5: SUMMARY -->
     <section class="screen" id="screen-5">
-        <h1>Almost done</h1>
-        <p class="sub">
+        <h1 data-localize="scr5-title">Almost done</h1>
+        <p class="sub" data-localize="scr5-subtitle">
             Please review and confirm.
         </p>
 
         <div class="summary-card">
             <div class="summary-row">
-                <div>Plan</div>
-                <strong>Unlimited Mobile Data</strong>
+                <div data-localize="scr5-sum-plan-label">Plan</div>
+                <strong data-localize="scr1-plan-name-strong">Unlimited Mobile Data</strong>
             </div>
             <div class="summary-row">
-                <div>Monthly price</div>
-                <strong>CHF 49</strong>
+                <div data-localize="scr5-sum-price-label">Monthly price</div>
+                <strong data-localize="scr1-plan-price-strong">CHF 49</strong>
             </div>
             <div class="summary-row">
-                <div>Activation fee</div>
-                <strong>Paid in-store ✅</strong>
+                <div data-localize="scr5-sum-fee-label">Activation fee</div>
+                <strong data-localize="scr5-sum-fee-status">Paid in-store ✅</strong>
             </div>
             <div class="summary-row">
-                <div>Number choice</div>
+                <div data-localize="scr5-sum-number-choice-label">Number choice</div>
                 <strong id="summaryNumberChoice">New number assigned</strong>
             </div>
             <div class="summary-row">
-                <div>Your number</div>
+                <div data-localize="scr5-sum-your-number-label">Your number</div>
                 <strong id="summaryActualNumber">+41 79 000 00 00</strong>
             </div>
-            <div class="summary-total">
+            <div class="summary-total" data-localize="scr5-sum-agreement">
                 By continuing you agree to start your Pepper Mobile service
                 and allow us to finalize setup using the information you provided.
             </div>
         </div>
 
-        <div class="small-hint" style="margin-top:1rem;">
+        <div class="small-hint" style="margin-top:1rem;" data-localize="scr5-hint">
             After you confirm, we'll finish activation. If anything needs manual review
             (e.g. ID clarity), we'll email you.
         </div>
     </section>
 
-    <!-- SCREEN 6: THANK YOU -->
     <section class="screen" id="screen-6">
         <div class="centered-block">
             <div class="big-emoji">✅</div>
-            <div class="big-headline">Thank you!</div>
-            <div class="big-text">
+            <div class="big-headline" data-localize="scr6-title">Thank you!</div>
+            <div class="big-text" data-localize="scr6-text">
                 Your details are submitted. We're setting up your service.
                 You'll get an email with next steps. If you asked to keep
                 your number, we'll handle the transfer for you.
@@ -672,36 +701,359 @@
 
             <div class="summary-card" style="margin-top:1.5rem;">
                 <div class="summary-row">
-                    <div>Status</div>
-                    <strong>Pending final activation</strong>
+                    <div data-localize="scr6-sum-status-label">Status</div>
+                    <strong data-localize="scr6-sum-status-value">Pending final activation</strong>
                 </div>
                 <div class="summary-row">
-                    <div>ID check</div>
-                    <strong style="color:var(--ql-accent);">⏳ Pending verification</strong>
+                    <div data-localize="scr6-sum-idcheck-label">ID check</div>
+                    <strong style="color:var(--ql-accent);" data-localize="scr6-sum-idcheck-value">⏳ Pending verification</strong>
                 </div>
                 <div class="summary-row">
-                    <div>Email sent to</div>
+                    <div data-localize="scr6-sum-email-label">Email sent to</div>
                     <strong>jane@example.com</strong>
                 </div>
                 <div class="summary-row">
-                    <div>Reference</div>
+                    <div data-localize="scr6-sum-ref-label">Reference</div>
                     <strong>X4F7Q9</strong>
                 </div>
             </div>
 
-            <div class="big-text" style="margin-top:1.5rem;">
+            <div class="big-text" style="margin-top:1.5rem;" data-localize="scr6-closing">
                 You can close this page now.
             </div>
         </div>
     </section>
 
     <footer>
-        <button class="btn btn-secondary" id="backBtn" onclick="goBack()">Back</button>
-        <button class="btn btn-primary" id="nextBtn" onclick="goNext()">Next</button>
+        <button class="btn btn-secondary" id="backBtn" onclick="goBack()"><span data-localize="btn-back">Back</span></button>
+        <button class="btn btn-primary" id="nextBtn" onclick="goNext()"><span data-localize="btn-next">Next</span></button>
     </footer>
 </main>
 
 <script>
+    // --- Localization Data ---
+    const translations = {
+        "en": {
+            // Meta
+            "pageTitle": "Pepper Mobile Onboarding",
+            "lang-label": "Language",
+            // Header
+            "brand-name": "Pepper",
+            "ref-purchased-at": "Purchased at:",
+            "ref-ref": "Ref:",
+            // Stepper
+            "step-welcome": "Welcome",
+            "step-details": "Your details",
+            "step-idcheck": "ID & credit",
+            "step-number": "Number",
+            "step-summary": "Summary",
+            "step-done": "Done",
+            // Footer Buttons
+            "btn-back": "Back",
+            "btn-next": "Next",
+            "btn-confirm": "Confirm",
+            // SCREEN 1: WELCOME
+            "scr1-title": "You're almost connected 🎉",
+            "scr1-subtitle": "Thanks for choosing Pepper Mobile. Let's activate your new plan. This only takes a few minutes.",
+            "scr1-plan-name": "Unlimited Mobile Data",
+            "scr1-plan-price": "CHF 49 / month",
+            "scr1-plan-desc": "Unlimited data in Switzerland, calls & texts included. Your one-time activation fee was already paid in-store.",
+            "scr1-badge1": "No stress setup",
+            "scr1-badge2": "Keep your number",
+            "scr1-badge3": "Swiss support",
+            "scr1-sub-text": "We'll ask for your contact info, confirm your identity, and (if needed) request to move your current number.",
+            "scr1-list-headline": "What you need:",
+            "scr1-list-items": "• An email you can access<br/>• Your ID card or passport<br/>• Your current mobile number (if you want to keep it)",
+            // SCREEN 2: DETAILS
+            "scr2-title": "Your details",
+            "scr2-subtitle": "We'll use this to set up your account and keep you updated.",
+            "scr2-label-name": "Full name",
+            "scr2-ph-name": "Jane Müller",
+            "scr2-label-email": "Email address",
+            "scr2-ph-email": "jane@example.com",
+            "scr2-hint-email": "We'll send a link so you can continue later if you close this page.",
+            "scr2-label-street": "Street & house number",
+            "scr2-ph-street": "Bahnhofstrasse 10",
+            "scr2-label-city": "City",
+            "scr2-ph-city": "Bern",
+            "scr2-label-zip": "ZIP",
+            "scr2-ph-zip": "3000",
+            "scr2-label-dob": "Date of birth",
+            // SCREEN 3: ID CHECK
+            "scr3-title": "ID verification & credit check",
+            "scr3-subtitle": "We're required to confirm who's using the SIM and to check basic credit eligibility. This won't affect your credit score.",
+            "scr3-step1-name": "Step 1: Upload ID",
+            "scr3-step1-desc": "Please take a clear photo of the front of your ID card or passport. This is a demo – no real data is sent.",
+            "scr3-btn-upload": "📷 Upload / take photo of ID",
+            "scr3-status-unselected": "No file selected",
+            "scr3-step2-name": "Step 2: Run quick check",
+            "scr3-step2-desc": "We'll confirm you're eligible for this plan.",
+            "scr3-btn-verify": "✅ Verify identity & credit",
+            "scr3-status-unverified": "Not verified yet",
+            "scr3-btn-upload-working": "Uploading ID…",
+            "scr3-btn-upload-success": "ID uploaded",
+            "scr3-btn-verify-working": "Verifying…",
+            "scr3-btn-verify-success": "Verified",
+            // SCREEN 4: NUMBER
+            "scr4-title": "Your number",
+            "scr4-subtitle": "Do you want to keep your current mobile number, or get a brand new one?",
+            "scr4-opt-new-title": "Get a new number",
+            "scr4-opt-new-hint": "Fastest",
+            "scr4-opt-port-title": "Keep my current number",
+            "scr4-opt-port-hint": "We'll move it for you",
+            "scr4-label-current-num": "Your current mobile number",
+            "scr4-ph-current-num": "+41 79 123 45 67",
+            "scr4-label-provider": "Current provider",
+            "scr4-select-default": "Select your provider",
+            "scr4-select-other": "Other",
+            "scr4-label-auth": "Authorization",
+            "scr4-auth-text": "I authorize Pepper Mobile to request number transfer from my current provider.",
+            "scr4-hint-auth": "Digital signature required for legal number porting.",
+            "scr4-btn-sign": "✍️ Sign Authorization",
+            "scr4-status-unsigned": "Not signed yet",
+            "scr4-btn-sign-working": "Opening signature…",
+            "scr4-btn-sign-success": "Signed successfully",
+            // SCREEN 5: SUMMARY
+            "scr5-title": "Almost done",
+            "scr5-subtitle": "Please review and confirm.",
+            "scr5-sum-plan-label": "Plan",
+            "scr1-plan-name-strong": "Unlimited Mobile Data",
+            "scr5-sum-price-label": "Monthly price",
+            "scr1-plan-price-strong": "CHF 49",
+            "scr5-sum-fee-label": "Activation fee",
+            "scr5-sum-fee-status": "Paid in-store ✅",
+            "scr5-sum-number-choice-label": "Number choice",
+            "scr5-sum-number-new": "New number assigned",
+            "scr5-sum-number-port": "Keep my current number",
+            "scr5-sum-your-number-label": "Your number",
+            "scr5-sum-agreement": "By continuing you agree to start your Pepper Mobile service and allow us to finalize setup using the information you provided.",
+            "scr5-hint": "After you confirm, we'll finish activation. If anything needs manual review (e.g. ID clarity), we'll email you.",
+            // SCREEN 6: THANK YOU
+            "scr6-title": "Thank you!",
+            "scr6-text": "Your details are submitted. We're setting up your service. You'll get an email with next steps. If you asked to keep your number, we'll handle the transfer for you.",
+            "scr6-sum-status-label": "Status",
+            "scr6-sum-status-value": "Pending final activation",
+            "scr6-sum-idcheck-label": "ID check",
+            "scr6-sum-idcheck-value": "⏳ Pending verification",
+            "scr6-sum-email-label": "Email sent to",
+            "scr6-sum-ref-label": "Reference",
+            "scr6-closing": "You can close this page now.",
+        },
+        "de": {
+            // Meta
+            "pageTitle": "Pepper Mobile Registrierung",
+            "lang-label": "Sprache",
+            // Header
+            "brand-name": "Pepper",
+            "ref-purchased-at": "Gekauft bei:",
+            "ref-ref": "Ref:",
+            // Stepper
+            "step-welcome": "Willkommen",
+            "step-details": "Ihre Angaben",
+            "step-idcheck": "ID & Bonität",
+            "step-number": "Nummer",
+            "step-summary": "Zusammenfassung",
+            "step-done": "Fertig",
+            // Footer Buttons
+            "btn-back": "Zurück",
+            "btn-next": "Weiter",
+            "btn-confirm": "Bestätigen",
+            // SCREEN 1: WELCOME
+            "scr1-title": "Fast geschafft 🎉",
+            "scr1-subtitle": "Danke, dass Sie sich für Pepper Mobile entschieden haben. Lassen Sie uns Ihren neuen Plan aktivieren. Das dauert nur wenige Minuten.",
+            "scr1-plan-name": "Unlimitiertes Mobile Daten",
+            "scr1-plan-price": "CHF 49 / Monat",
+            "scr1-plan-desc": "Unlimitierte Daten in der Schweiz, Anrufe & SMS inklusive. Ihre einmalige Aktivierungsgebühr wurde bereits im Geschäft bezahlt.",
+            "scr1-badge1": "Stressfreie Einrichtung",
+            "scr1-badge2": "Nummer behalten",
+            "scr1-badge3": "Schweizer Support",
+            "scr1-sub-text": "Wir fragen nach Ihren Kontaktdaten, bestätigen Ihre Identität und veranlassen (falls gewünscht) die Übernahme Ihrer aktuellen Nummer.",
+            "scr1-list-headline": "Was Sie benötigen:",
+            "scr1-list-items": "• Eine E-Mail-Adresse, auf die Sie zugreifen können<br/>• Ihren Personalausweis oder Reisepass<br/>• Ihre aktuelle Mobilfunknummer (falls Sie diese behalten möchten)",
+            // SCREEN 2: DETAILS
+            "scr2-title": "Ihre Angaben",
+            "scr2-subtitle": "Wir verwenden diese, um Ihr Konto einzurichten und Sie auf dem Laufenden zu halten.",
+            "scr2-label-name": "Vollständiger Name",
+            "scr2-ph-name": "Jane Müller",
+            "scr2-label-email": "E-Mail-Adresse",
+            "scr2-ph-email": "jane@beispiel.ch",
+            "scr2-hint-email": "Wir senden Ihnen einen Link, damit Sie später fortfahren können, falls Sie diese Seite schliessen.",
+            "scr2-label-street": "Strasse & Hausnummer",
+            "scr2-ph-street": "Bahnhofstrasse 10",
+            "scr2-label-city": "Ort",
+            "scr2-ph-city": "Bern",
+            "scr2-label-zip": "PLZ",
+            "scr2-ph-zip": "3000",
+            "scr2-label-dob": "Geburtsdatum",
+            // SCREEN 3: ID CHECK
+            "scr3-title": "ID-Verifizierung & Bonitätsprüfung",
+            "scr3-subtitle": "Wir sind verpflichtet, den SIM-Karten-Nutzer zu bestätigen und eine grundlegende Bonitätsprüfung durchzuführen. Dies beeinflusst Ihren Bonitätsscore nicht.",
+            "scr3-step1-name": "Schritt 1: ID hochladen",
+            "scr3-step1-desc": "Bitte machen Sie ein deutliches Foto der Vorderseite Ihres Personalausweises oder Reisepasses. Dies ist eine Demo – es werden keine echten Daten gesendet.",
+            "scr3-btn-upload": "📷 ID hochladen / fotografieren",
+            "scr3-status-unselected": "Keine Datei ausgewählt",
+            "scr3-step2-name": "Schritt 2: Schnellprüfung durchführen",
+            "scr3-step2-desc": "Wir bestätigen Ihre Berechtigung für diesen Plan.",
+            "scr3-btn-verify": "✅ Identität & Bonität prüfen",
+            "scr3-status-unverified": "Noch nicht geprüft",
+            "scr3-btn-upload-working": "ID wird hochgeladen…",
+            "scr3-btn-upload-success": "ID hochgeladen",
+            "scr3-btn-verify-working": "Wird geprüft…",
+            "scr3-btn-verify-success": "Geprüft",
+            // SCREEN 4: NUMBER
+            "scr4-title": "Ihre Nummer",
+            "scr4-subtitle": "Möchten Sie Ihre aktuelle Mobilfunknummer behalten oder eine brandneue erhalten?",
+            "scr4-opt-new-title": "Eine neue Nummer erhalten",
+            "scr4-opt-new-hint": "Am schnellsten",
+            "scr4-opt-port-title": "Meine aktuelle Nummer behalten",
+            "scr4-opt-port-hint": "Wir übernehmen die Übertragung für Sie",
+            "scr4-label-current-num": "Ihre aktuelle Mobilfunknummer",
+            "scr4-ph-current-num": "+41 79 123 45 67",
+            "scr4-label-provider": "Aktueller Anbieter",
+            "scr4-select-default": "Wählen Sie Ihren Anbieter",
+            "scr4-select-other": "Andere",
+            "scr4-label-auth": "Autorisierung",
+            "scr4-auth-text": "Ich ermächtige Pepper Mobile, die Nummernübertragung von meinem aktuellen Anbieter zu beantragen.",
+            "scr4-hint-auth": "Digitale Unterschrift für die rechtliche Nummernportierung erforderlich.",
+            "scr4-btn-sign": "✍️ Autorisierung unterschreiben",
+            "scr4-status-unsigned": "Noch nicht unterschrieben",
+            "scr4-btn-sign-working": "Unterschrift wird geöffnet…",
+            "scr4-btn-sign-success": "Erfolgreich unterschrieben",
+            // SCREEN 5: SUMMARY
+            "scr5-title": "Fast fertig",
+            "scr5-subtitle": "Bitte überprüfen und bestätigen Sie.",
+            "scr5-sum-plan-label": "Plan",
+            "scr1-plan-name-strong": "Unlimitiertes Mobile Daten",
+            "scr5-sum-price-label": "Monatlicher Preis",
+            "scr1-plan-price-strong": "CHF 49",
+            "scr5-sum-fee-label": "Aktivierungsgebühr",
+            "scr5-sum-fee-status": "Im Geschäft bezahlt ✅",
+            "scr5-sum-number-choice-label": "Nummernwahl",
+            "scr5-sum-number-new": "Neue Nummer zugewiesen",
+            "scr5-sum-number-port": "Meine aktuelle Nummer behalten",
+            "scr5-sum-your-number-label": "Ihre Nummer",
+            "scr5-sum-agreement": "Mit der Fortsetzung stimmen Sie dem Start Ihres Pepper Mobile Dienstes zu und erlauben uns, die Einrichtung mit den von Ihnen bereitgestellten Informationen abzuschliessen.",
+            "scr5-hint": "Nach Ihrer Bestätigung schliessen wir die Aktivierung ab. Falls eine manuelle Überprüfung (z.B. ID-Klarheit) erforderlich ist, senden wir Ihnen eine E-Mail.",
+            // SCREEN 6: THANK YOU
+            "scr6-title": "Vielen Dank!",
+            "scr6-text": "Ihre Angaben wurden übermittelt. Wir richten Ihren Dienst ein. Sie erhalten eine E-Mail mit den nächsten Schritten. Falls Sie darum gebeten haben, Ihre Nummer zu behalten, kümmern wir uns um die Übertragung.",
+            "scr6-sum-status-label": "Status",
+            "scr6-sum-status-value": "Wartet auf finale Aktivierung",
+            "scr6-sum-idcheck-label": "ID-Prüfung",
+            "scr6-sum-idcheck-value": "⏳ Überprüfung ausstehend",
+            "scr6-sum-email-label": "E-Mail gesendet an",
+            "scr6-sum-ref-label": "Referenz",
+            "scr6-closing": "Sie können diese Seite jetzt schliessen.",
+        },
+        "fr": {
+            // Meta
+            "pageTitle": "Enregistrement Pepper Mobile",
+            "lang-label": "Langue",
+            // Header
+            "brand-name": "Pepper",
+            "ref-purchased-at": "Acheté chez:",
+            "ref-ref": "Réf:",
+            // Stepper
+            "step-welcome": "Bienvenue",
+            "step-details": "Vos coordonnées",
+            "step-idcheck": "ID & Crédit",
+            "step-number": "Numéro",
+            "step-summary": "Résumé",
+            "step-done": "Terminé",
+            // Footer Buttons
+            "btn-back": "Retour",
+            "btn-next": "Suivant",
+            "btn-confirm": "Confirmer",
+            // SCREEN 1: WELCOME
+            "scr1-title": "C'est presque fait 🎉",
+            "scr1-subtitle": "Merci d'avoir choisi Pepper Mobile. Activons votre nouveau plan. Cela ne prend que quelques minutes.",
+            "scr1-plan-name": "Données Mobiles Illimitées",
+            "scr1-plan-price": "CHF 49 / mois",
+            "scr1-plan-desc": "Données illimitées en Suisse, appels & SMS inclus. Vos frais d'activation uniques ont déjà été payés en magasin.",
+            "scr1-badge1": "Configuration simple",
+            "scr1-badge2": "Gardez votre numéro",
+            "scr1-badge3": "Support Suisse",
+            "scr1-sub-text": "Nous vous demanderons vos coordonnées, confirmerons votre identité et (si nécessaire) demanderons le transfert de votre numéro actuel.",
+            "scr1-list-headline": "Ce dont vous avez besoin:",
+            "scr1-list-items": "• Un email auquel vous avez accès<br/>• Votre carte d'identité ou passeport<br/>• Votre numéro de mobile actuel (si vous souhaitez le garder)",
+            // SCREEN 2: DETAILS
+            "scr2-title": "Vos coordonnées",
+            "scr2-subtitle": "Nous les utiliserons pour configurer votre compte et vous tenir informé.",
+            "scr2-label-name": "Nom complet",
+            "scr2-ph-name": "Jane Müller",
+            "scr2-label-email": "Adresse e-mail",
+            "scr2-ph-email": "jane@exemple.com",
+            "scr2-hint-email": "Nous vous enverrons un lien pour que vous puissiez continuer plus tard si vous fermez cette page.",
+            "scr2-label-street": "Rue & numéro de maison",
+            "scr2-ph-street": "Bahnhofstrasse 10",
+            "scr2-label-city": "Ville",
+            "scr2-ph-city": "Berne",
+            "scr2-label-zip": "NPA",
+            "scr2-ph-zip": "3000",
+            "scr2-label-dob": "Date de naissance",
+            // SCREEN 3: ID CHECK
+            "scr3-title": "Vérification d'identité & solvabilité",
+            "scr3-subtitle": "Nous sommes tenus de confirmer l'utilisateur de la carte SIM et de vérifier l'éligibilité de base au crédit. Cela n'affectera pas votre score de crédit.",
+            "scr3-step1-name": "Étape 1: Télécharger l'ID",
+            "scr3-step1-desc": "Veuillez prendre une photo claire de l'avant de votre carte d'identité ou passeport. Ceci est une démo – aucune donnée réelle n'est envoyée.",
+            "scr3-btn-upload": "📷 Télécharger / prendre photo ID",
+            "scr3-status-unselected": "Aucun fichier sélectionné",
+            "scr3-step2-name": "Étape 2: Effectuer une vérification rapide",
+            "scr3-step2-desc": "Nous confirmerons votre éligibilité à ce plan.",
+            "scr3-btn-verify": "✅ Vérifier identité & crédit",
+            "scr3-status-unverified": "Pas encore vérifié",
+            "scr3-btn-upload-working": "Téléchargement de l'ID…",
+            "scr3-btn-upload-success": "ID téléchargé",
+            "scr3-btn-verify-working": "Vérification…",
+            "scr3-btn-verify-success": "Vérifié",
+            // SCREEN 4: NUMBER
+            "scr4-title": "Votre numéro",
+            "scr4-subtitle": "Voulez-vous garder votre numéro de mobile actuel, ou obtenir un tout nouveau numéro ?",
+            "scr4-opt-new-title": "Obtenir un nouveau numéro",
+            "scr4-opt-new-hint": "Le plus rapide",
+            "scr4-opt-port-title": "Garder mon numéro actuel",
+            "scr4-opt-port-hint": "Nous nous occupons du transfert",
+            "scr4-label-current-num": "Votre numéro de mobile actuel",
+            "scr4-ph-current-num": "+41 79 123 45 67",
+            "scr4-label-provider": "Opérateur actuel",
+            "scr4-select-default": "Sélectionnez votre opérateur",
+            "scr4-select-other": "Autre",
+            "scr4-label-auth": "Autorisation",
+            "scr4-auth-text": "J'autorise Pepper Mobile à demander le transfert de numéro auprès de mon opérateur actuel.",
+            "scr4-hint-auth": "Signature numérique requise pour la portabilité légale du numéro.",
+            "scr4-btn-sign": "✍️ Signer l'autorisation",
+            "scr4-status-unsigned": "Pas encore signé",
+            "scr4-btn-sign-working": "Ouverture de la signature…",
+            "scr4-btn-sign-success": "Signé avec succès",
+            // SCREEN 5: SUMMARY
+            "scr5-title": "Presque terminé",
+            "scr5-subtitle": "Veuillez vérifier et confirmer.",
+            "scr5-sum-plan-label": "Plan",
+            "scr1-plan-name-strong": "Données Mobiles Illimitées",
+            "scr5-sum-price-label": "Prix mensuel",
+            "scr1-plan-price-strong": "CHF 49",
+            "scr5-sum-fee-label": "Frais d'activation",
+            "scr5-sum-fee-status": "Payé en magasin ✅",
+            "scr5-sum-number-choice-label": "Choix du numéro",
+            "scr5-sum-number-new": "Nouveau numéro attribué",
+            "scr5-sum-number-port": "Garder mon numéro actuel",
+            "scr5-sum-your-number-label": "Votre numéro",
+            "scr5-sum-agreement": "En continuant, vous acceptez de démarrer votre service Pepper Mobile et nous permettez de finaliser la configuration en utilisant les informations que vous avez fournies.",
+            "scr5-hint": "Après votre confirmation, nous terminerons l'activation. Si quelque chose nécessite une révision manuelle (par exemple, la clarté de l'ID), nous vous enverrons un e-mail.",
+            // SCREEN 6: THANK YOU
+            "scr6-title": "Merci!",
+            "scr6-text": "Vos coordonnées ont été soumises. Nous configurons votre service. Vous recevrez un e-mail avec les prochaines étapes. Si vous avez demandé à conserver votre numéro, nous nous occuperons du transfert pour vous.",
+            "scr6-sum-status-label": "Statut",
+            "scr6-sum-status-value": "En attente d'activation finale",
+            "scr6-sum-idcheck-label": "Vérification ID",
+            "scr6-sum-idcheck-value": "⏳ Vérification en attente",
+            "scr6-sum-email-label": "Email envoyé à",
+            "scr6-sum-ref-label": "Référence",
+            "scr6-closing": "Vous pouvez fermer cette page maintenant.",
+        }
+    };
+
+    let currentLanguage = "en"; // Default language
     let currentScreen = 1;
     const totalScreens = 6;
 
@@ -711,7 +1063,100 @@
     let portedNumber = "+41 79 123 45 67";
     let isSigned = false;
 
+    // --- Localization Functions ---
+
+    /**
+     * Updates all localized elements on the page for the given language.
+     * @param {string} lang The language code ('en', 'de', 'fr').
+     */
+    function applyLocalization(lang) {
+        const trans = translations[lang];
+        if (!trans) return;
+
+        currentLanguage = lang;
+        document.documentElement.lang = lang; // Update HTML lang attribute
+
+        // Update page title
+        document.getElementById("pageTitle").textContent = trans["pageTitle"] || "";
+
+        // Update all elements with data-localize attribute
+        document.querySelectorAll('[data-localize]').forEach(el => {
+            const key = el.getAttribute('data-localize');
+            if (trans[key]) {
+                el.innerHTML = trans[key]; // Use innerHTML to allow for <br/> tags
+            }
+        });
+
+        // Update all elements with data-localize-placeholder attribute
+        document.querySelectorAll('[data-localize-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-localize-placeholder');
+            if (trans[key] && el.placeholder !== undefined) {
+                el.placeholder = trans[key];
+            }
+        });
+
+        // Specific updates for step labels that need to be re-read for truncation
+        document.querySelectorAll('.stepper .step-label').forEach(el => {
+            // These are already updated by data-localize, but here we ensure
+            // the new translated text fits the fixed width.
+        });
+
+        // Update active button text (Next/Confirm)
+        updateNextButtonText();
+
+        // Update async button texts if they are in an active, non-success state
+        // This is primarily handled in mockAsyncAction and updateUI for the status texts.
+
+        // Re-run UI update to refresh summary screen and status messages
+        updateUI();
+    }
+
+    /**
+     * Sets the application language and saves it to local storage.
+     * @param {string} lang The language code ('en', 'de', 'fr').
+     */
+    function setLanguage(lang) {
+        if (translations[lang]) {
+            applyLocalization(lang);
+            localStorage.setItem('pepperMobileLang', lang); // Save preference
+        }
+    }
+
+    /**
+     * Initializes the language based on local storage or defaults to 'en'.
+     */
+    function initializeLanguage() {
+        const savedLang = localStorage.getItem('pepperMobileLang') || 'en';
+        document.getElementById('lang-select').value = savedLang;
+        applyLocalization(savedLang);
+    }
+
+    // --- Existing Script Functions Updated for Localization ---
+
+    function updateNextButtonText() {
+        const nextBtn = document.getElementById("nextBtn");
+        if (nextBtn) {
+            const nextBtnSpan = nextBtn.querySelector('[data-localize]');
+            if (currentScreen === totalScreens - 1) {
+                const confirmText = translations[currentLanguage]["btn-confirm"] || "Confirm";
+                if (nextBtnSpan) {
+                    nextBtnSpan.textContent = confirmText;
+                } else {
+                    nextBtn.textContent = confirmText;
+                }
+            } else if (currentScreen < totalScreens) {
+                const nextText = translations[currentLanguage]["btn-next"] || "Next";
+                if (nextBtnSpan) {
+                    nextBtnSpan.textContent = nextText;
+                } else {
+                    nextBtn.textContent = nextText;
+                }
+            }
+        }
+    }
+
     function updateUI() {
+        // ... (existing updateUI logic for screens, buttons, stepper) ...
         // screens
         for (let i = 1; i <= totalScreens; i++) {
             const el = document.getElementById("screen-" + i);
@@ -733,7 +1178,7 @@
             nextBtn.disabled = true;
         } else {
             nextBtn.disabled = false;
-            nextBtn.textContent = currentScreen === totalScreens - 1 ? "Confirm" : "Next";
+            updateNextButtonText(); // Localized logic
         }
 
         // stepper styling
@@ -753,16 +1198,32 @@
             }
         });
 
-        // summary texts for number choice + actual number
+        // summary texts for number choice + actual number (Localized)
         const sumChoiceEl = document.getElementById("summaryNumberChoice");
         const sumActualEl = document.getElementById("summaryActualNumber");
 
         if (chosenNumberOption === "port") {
-            if (sumChoiceEl) sumChoiceEl.textContent = "Keep my current number";
+            const portText = translations[currentLanguage]["scr5-sum-number-port"] || "Keep my current number";
+            if (sumChoiceEl) sumChoiceEl.textContent = portText;
             if (sumActualEl) sumActualEl.textContent = portedNumber || "(not entered)";
         } else {
-            if (sumChoiceEl) sumChoiceEl.textContent = "New number assigned";
+            const newText = translations[currentLanguage]["scr5-sum-number-new"] || "New number assigned";
+            if (sumChoiceEl) sumChoiceEl.textContent = newText;
             if (sumActualEl) sumActualEl.textContent = generatedNewNumber;
+        }
+
+        // Update initial/unverified status texts (localized)
+        if (document.getElementById("uploadStatus").querySelector('.status-done') === null) {
+            const statusUnselected = translations[currentLanguage]["scr3-status-unselected"] || "No file selected";
+            document.getElementById("uploadStatus").innerHTML = `<span>${statusUnselected}</span>`;
+        }
+        if (document.getElementById("checkStatus").querySelector('.status-done') === null) {
+            const statusUnverified = translations[currentLanguage]["scr3-status-unverified"] || "Not verified yet";
+            document.getElementById("checkStatus").innerHTML = `<span>${statusUnverified}</span>`;
+        }
+        if (!isSigned) {
+            const statusUnsigned = translations[currentLanguage]["scr4-status-unsigned"] || "Not signed yet";
+            document.getElementById("signStatus").innerHTML = `<span style="color:var(--ql-text-dim);">${statusUnsigned}</span>`;
         }
     }
 
@@ -785,25 +1246,28 @@
        --------------------------- */
     function mockAsyncAction(kind) {
         // kind: 'upload' | 'check' | 'sign'
-        let btnEl, statusEl, workingLabel, successLabel;
+        let btnEl, statusEl, workingLabelKey, successLabelKey;
 
         if (kind === "upload") {
             btnEl = document.getElementById("btnUpload");
             statusEl = document.getElementById("uploadStatus");
-            workingLabel = "Uploading ID…";
-            successLabel = "ID uploaded";
+            workingLabelKey = "scr3-btn-upload-working";
+            successLabelKey = "scr3-btn-upload-success";
         } else if (kind === "check") {
             btnEl = document.getElementById("btnVerify");
             statusEl = document.getElementById("checkStatus");
-            workingLabel = "Verifying…";
-            successLabel = "Verified";
+            workingLabelKey = "scr3-btn-verify-working";
+            successLabelKey = "scr3-btn-verify-success";
         } else if (kind === "sign") {
             btnEl = document.getElementById("btnSign");
             statusEl = document.getElementById("signStatus");
-            workingLabel = "Opening signature…";
-            successLabel = "Signed successfully";
+            workingLabelKey = "scr4-btn-sign-working";
+            successLabelKey = "scr4-btn-sign-success";
             isSigned = true;
         }
+
+        const workingLabel = translations[currentLanguage][workingLabelKey] || "Processing…";
+        const successLabel = translations[currentLanguage][successLabelKey] || "Success!";
 
         // already completed? do nothing
         if (!btnEl || btnEl.disabled) return;
@@ -817,7 +1281,7 @@
             // success style
             finishSuccessState(btnEl, successLabel);
 
-            // update status text with accent color
+            // update status text with accent color (Localized)
             if (statusEl) {
                 statusEl.innerHTML = `✅ ${successLabel} (demo)`;
                 statusEl.classList.add("status-done");
@@ -835,17 +1299,17 @@
 
         btnEl.classList.remove("btn-success");
         btnEl.innerHTML = `
-			<div class="loader"></div>
-			<span>${label}</span>
-		`;
+          <div class="loader"></div>
+          <span>${label}</span>
+       `;
     }
 
     function finishSuccessState(btnEl, label) {
         btnEl.classList.add("btn-success");
         btnEl.innerHTML = `
-			<span class="checkmark">✔</span>
-			<span>${label}</span>
-		`;
+          <span class="checkmark">✔</span>
+          <span>${label}</span>
+       `;
     }
 
     /* ---------------------------
@@ -897,7 +1361,8 @@
         return `+41 79 ${d1}${d2}${d3} ${d4}${d5} ${d6}${d7}`;
     }
 
-    updateUI();
+    // Initialize the language and UI when the script runs
+    initializeLanguage();
 </script>
 </body>
 </html>
